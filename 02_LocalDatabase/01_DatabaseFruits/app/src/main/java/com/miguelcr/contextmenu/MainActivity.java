@@ -16,13 +16,17 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
+import com.miguelcr.contextmenu.entities.Fruit;
+import com.miguelcr.contextmenu.entities.FruitDao;
+
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     ListView listView;
-    List<String> fruits;
+    List<Fruit> fruits;
     EditText textNewItem;
+
+    private FruitDao fruitDaoManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,11 +39,12 @@ public class MainActivity extends AppCompatActivity {
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 
 
+        fruitDaoManager = DatabaseConnection.getFruitDao(this);
+
+
         // 1. Array of data
-        fruits = new ArrayList<>();
-        fruits.add("banana");
-        fruits.add("strawberry");
-        fruits.add("lemon");
+        fruits = fruitDaoManager.loadAll();
+
 
         // 2. Adapter to draw the data inside the ListView
         final ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,fruits);
