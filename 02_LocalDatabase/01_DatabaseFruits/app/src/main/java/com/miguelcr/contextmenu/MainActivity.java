@@ -11,7 +11,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -27,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
     EditText textNewItem;
 
     private FruitDao fruitDaoManager;
+    FruitAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         // 2. Adapter to draw the data inside the ListView
-        final ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,fruits);
+        adapter = new FruitAdapter(this,R.layout.item_list_fruit,fruits);
 
         // 3. ListView
         listView = (ListView) findViewById(R.id.listViewFruits);
@@ -65,7 +65,14 @@ public class MainActivity extends AppCompatActivity {
                             .setAction("Action", null).show();
                 } else {
                     String text = textNewItem.getText().toString();
-                    fruits.add(text);
+                    Fruit newFruit = new Fruit();
+                    newFruit.setName(text);
+
+                    // Add the new object to database
+                    fruitDaoManager.insert(newFruit);
+
+                    fruits.clear();
+                    fruits = fruitDaoManager.loadAll();
                     adapter.notifyDataSetChanged();
                     textNewItem.setText("");
                 }

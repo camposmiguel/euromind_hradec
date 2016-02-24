@@ -20,7 +20,7 @@ public class ExampleGenerator {
 
     private static void addFruit(Schema schema) {
         Entity fruit = schema.addEntity("Fruit");
-        fruit.addIdProperty().primaryKey().autoincrement();
+        fruit.addIdProperty().autoincrement();
         fruit.addStringProperty("name");
     }
 
