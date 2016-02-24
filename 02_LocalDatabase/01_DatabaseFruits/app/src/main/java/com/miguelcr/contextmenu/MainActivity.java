@@ -62,6 +62,7 @@ public class MainActivity extends AppCompatActivity {
                     String text = textNewItem.getText().toString();
                     fruits.add(text);
                     adapter.notifyDataSetChanged();
+                    textNewItem.setText("");
                 }
             }
         });
