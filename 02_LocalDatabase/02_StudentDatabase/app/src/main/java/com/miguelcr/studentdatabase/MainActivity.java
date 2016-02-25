@@ -1,8 +1,8 @@
 package com.miguelcr.studentdatabase;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -21,6 +21,8 @@ public class MainActivity extends AppCompatActivity {
     private StudentAdapter adapter;
     private List<Student> students;
     private StudentDao studentDao;
+    private final int OPERATION_ADD_STUDENT = 1;
+    private final int OPERATION_EDIT_STUDENT = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,8 +35,8 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                Intent i = new Intent(MainActivity.this, NewStudentActivity.class);
+                startActivityForResult(i, OPERATION_ADD_STUDENT);
             }
         });
 
@@ -45,6 +47,19 @@ public class MainActivity extends AppCompatActivity {
         listViewStudents = (ListView) findViewById(R.id.listViewStudents);
         adapter = new StudentAdapter(this,students);
         listViewStudents.setAdapter(adapter);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode==OPERATION_ADD_STUDENT) {
+            students.clear();
+            students.addAll(studentDao.loadAll());
+            adapter.notifyDataSetChanged();
+
+        } else if(requestCode==OPERATION_EDIT_STUDENT) {
+
+        }
     }
 
     @Override
