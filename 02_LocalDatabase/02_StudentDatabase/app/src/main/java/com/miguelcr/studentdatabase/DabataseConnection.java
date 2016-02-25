@@ -2,7 +2,6 @@ package com.miguelcr.studentdatabase;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
-import android.widget.EditText;
 
 import com.miguelcr.studentdatabase.dao.DaoMaster;
 import com.miguelcr.studentdatabase.dao.DaoSession;
@@ -11,15 +10,13 @@ import com.miguelcr.studentdatabase.dao.StudentDao;
 /**
  * Created by miguelcampos on 25/2/16.
  */
-public class DabatabeConnection {
-    private SQLiteDatabase db;
+public class DabataseConnection {
+    private static SQLiteDatabase db;
 
-    private EditText editText;
+    private static DaoMaster daoMaster;
+    private static DaoSession daoSession;
 
-    private DaoMaster daoMaster;
-    private DaoSession daoSession;
-
-    public StudentDao getStudentDao(Context ctx) {
+    public static StudentDao getStudentDao(Context ctx) {
         DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(ctx, "student-db", null);
         db = helper.getWritableDatabase();
         daoMaster = new DaoMaster(db);

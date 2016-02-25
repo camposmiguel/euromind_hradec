@@ -13,6 +13,7 @@ import android.widget.ListView;
 import com.miguelcr.studentdatabase.dao.StudentDao;
 import com.miguelcr.studentdatabase.entities.Student;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -37,7 +38,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        students = studentDao.loadAll();
+        studentDao = DabataseConnection.getStudentDao(this);
+        students = new ArrayList<>();
+        students.addAll(studentDao.loadAll());
 
         listViewStudents = (ListView) findViewById(R.id.listViewStudents);
         adapter = new StudentAdapter(this,students);
