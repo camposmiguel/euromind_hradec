@@ -13,7 +13,8 @@ public class ExampleGenerator {
 
         //addNote(schema);
         //addCustomerOrder(schema);
-        addFruit(schema);
+        //addFruit(schema);
+        addStudent(schema);
 
         new DaoGenerator().generateAll(schema, "../01_DatabaseFruits/app/src/main/java");
     }
@@ -22,6 +23,15 @@ public class ExampleGenerator {
         Entity fruit = schema.addEntity("Fruit");
         fruit.addIdProperty().autoincrement();
         fruit.addStringProperty("name");
+    }
+
+    private static void addStudent(Schema schema) {
+        Entity student = schema.addEntity("Student");
+        student.addIdProperty().autoincrement();
+        student.addStringProperty("name");
+        student.addIntProperty("age");
+        student.addStringProperty("sex");
+
     }
 
     private static void addNote(Schema schema) {

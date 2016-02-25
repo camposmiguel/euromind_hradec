@@ -71,8 +71,9 @@ public class MainActivity extends AppCompatActivity {
                     // Add the new object to database
                     fruitDaoManager.insert(newFruit);
 
+                    // Refresh the listView
                     fruits.clear();
-                    fruits = fruitDaoManager.loadAll();
+                    fruits.addAll(fruitDaoManager.loadAll());
                     adapter.notifyDataSetChanged();
                     textNewItem.setText("");
                 }
